@@ -1,0 +1,6 @@
+{
+	"Coin_1":{"OverType":2,"Price":99,"Currency":2,"Count":-1,"Type":-2,"SubType":-2,"Value":1.0,"TypeValue":3},
+	"Coin_10":{"OverType":2,"Price":990,"Currency":2,"Count":-1,"Type":-2,"SubType":-3,"Value":10.0,"TypeValue":3},
+	"Coin_Ads":{"OverType":2,"Price":1,"Currency":3,"Count":1,"Type":-2,"SubType":-4,"Value":25.0,"TypeValue":3},
+	"Cell":{"OverType":2,"Price":157,"Currency":1,"Count":3,"Type":-1,"SubType":-1,"Value":-1.0,"TypeValue":3}
+}

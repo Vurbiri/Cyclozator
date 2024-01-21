@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e01813118bc584eb2a1c8c1bdd59d2, type: 3}
+  m_Name: Box_Red
+  m_EditorClassIdentifier: 
+  _type: 5
+  _materialDisplay: {fileID: 2100000, guid: db6065f274fc05c4cabe71111ed48a88, type: 2}
+  _materialDisplayMobile: {fileID: 2100000, guid: d4414ebf87c33614a930115165c1f0c6,
+    type: 2}
+  _materialChange: {fileID: 2100000, guid: cf0cf542d6a2f0149b23f0392d68db29, type: 2}
