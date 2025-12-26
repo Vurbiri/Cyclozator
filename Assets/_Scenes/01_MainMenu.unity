@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3331,9 +3330,9 @@ GameObject:
   m_Component:
   - component: {fileID: 725564982}
   - component: {fileID: 725564986}
+  - component: {fileID: 725564987}
   - component: {fileID: 725564985}
   - component: {fileID: 725564984}
-  - component: {fileID: 725564987}
   m_Layer: 5
   m_Name: HelpButton
   m_TagString: Untagged
@@ -4096,12 +4095,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!81 &961739751
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4120,7 +4119,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 4
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -4551,9 +4550,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1046593731}
   - component: {fileID: 1046593735}
+  - component: {fileID: 1046593736}
   - component: {fileID: 1046593734}
   - component: {fileID: 1046593733}
-  - component: {fileID: 1046593736}
   m_Layer: 5
   m_Name: ShortcutButton
   m_TagString: Untagged
@@ -9894,10 +9893,10 @@ RectTransform:
   - {fileID: 8228356753586015018}
   m_Father: {fileID: 51082412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -137.59662}
+  m_SizeDelta: {x: 192.98305, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2287419499586492397
 MonoBehaviour:
@@ -11209,10 +11208,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1833178035072272995}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 96.49152, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 96.49152, y: -20.296612}
+  m_SizeDelta: {x: 172.98305, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9149845474065810904
 CanvasRenderer:

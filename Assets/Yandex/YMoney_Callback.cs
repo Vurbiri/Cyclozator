@@ -1,3 +1,5 @@
+#if YSDK
+
 using Cysharp.Threading.Tasks;
 using System;
 
@@ -19,3 +21,4 @@ public partial class YMoney
     public void OnEndGetPurchases(string value) => taskEndGetPurchases?.TrySetResult(value);
     public void OnEndConsumePurchase(int result) => taskEndConsumePurchase?.TrySetResult(Convert.ToBoolean(result));
 }
+#endif

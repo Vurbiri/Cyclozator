@@ -14,8 +14,6 @@ public class StartMenu : MenuNavigation
     [SerializeField] private GameObject _authorizedButtonsPanel;
     [SerializeField] private GameObject _notAuthorizedButtonsPanel;
 
-    private YandexSDK YSDK => YandexSDK.Inst;
-    private YMoney YM => YMoney.Inst;
 
     public void Start()
     {
@@ -25,11 +23,12 @@ public class StartMenu : MenuNavigation
         _authorizedButtonsPanel.SetActive(false);
         _notAuthorizedButtonsPanel.SetActive(false);
 
-        if (YSDK.IsLogOn)
+#if YSDK
+        if (YandexSDK.Inst.IsLogOn)
             _authorizedButtonsPanel.SetActive(true);
-        else if (YSDK.IsInitialize)
+        else if (YandexSDK.Inst.IsInitialize)
             _notAuthorizedButtonsPanel.SetActive(true);
-           
+#endif
     }
     
     public void OnPreStartGame()
@@ -44,6 +43,8 @@ public class StartMenu : MenuNavigation
 
     public void OnClickAuthorization()
     {
+#if YSDK
+
         OnClickAuthorizationAsync().Forget();
 
         async UniTaskVoid OnClickAuthorizationAsync()
@@ -53,35 +54,32 @@ public class StartMenu : MenuNavigation
             else
                 FirstSelect();
         }
+#endif
     }
 
+#if YSDK
     public async UniTask<bool> Authorization()
     {
-        if (!YSDK.IsPlayer)
-            if (!await YSDK.InitPlayer())
+        if (!YandexSDK.Inst.IsPlayer)
+            if (!await YandexSDK.Inst.InitPlayer())
                 return false;
 
-        if (!await YSDK.LogOn())
+        if (!await YandexSDK.Inst.LogOn())
             return false;
 
         Banners.Inst.Clear();
 
-        if (!YSDK.IsLeaderboard)
-            await YSDK.InitLeaderboards();
+        if (!YandexSDK.Inst.IsLeaderboard)
+            await YandexSDK.Inst.InitLeaderboards();
 
-        //if (!YM.IsPayments)
-        //    await YM.Initialize();
 
         _authorizedButtonsPanel.SetActive(true);
         _notAuthorizedButtonsPanel.SetActive(false);
 
-#if !UNITY_EDITOR
-        if(!Storage.StoragesCreate())
+        if (!Storage.StoragesCreate())
             Message.Banner(Localization.Inst.GetText("ErrorStorage"), MessageType.Error, 7000);
-#else
-        Storage.Create<JsonToFile>();
-#endif
-        YM.IsFirstStart = !await Storage.Initialize();
+
+        YMoney.Inst.IsFirstStart = !await Storage.Initialize();
         SettingsStorage.Inst.Personalization(_captionText, _avatarTexture).Forget();
         
         //if (YM.IsPayments)
@@ -89,6 +87,7 @@ public class StartMenu : MenuNavigation
 
         return true;
     }
+#endif
 
     private void SetLocalizationName() => SettingsStorage.Inst.Personalization(_captionText);
 

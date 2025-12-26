@@ -7,7 +7,11 @@ public class JsonToLocalStorage : JsonTo
 {
     private string _key;
 
+#if UNITY_EDITOR
+    public override bool IsValid => false;
+#else
     public override bool IsValid => UnityJS.IsStorage();
+#endif
 
     public async override UniTask<bool> Initialize(string key)
     {

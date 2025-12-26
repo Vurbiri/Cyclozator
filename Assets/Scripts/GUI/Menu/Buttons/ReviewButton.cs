@@ -1,12 +1,17 @@
+#if YSDK
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class ReviewButton : MonoBehaviour
 {
+#if !YSDK
+    private void Start() => Destroy(gameObject);
+#else
     [SerializeField] private string _message = "ReviewReward";
     [SerializeField] private int _coins = 25;
     [Space]
@@ -45,4 +50,5 @@ public class ReviewButton : MonoBehaviour
                 }));
         }
     }
+#endif
 }

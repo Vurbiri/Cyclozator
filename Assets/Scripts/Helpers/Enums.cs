@@ -76,8 +76,10 @@ public enum ItemType : sbyte
 
 public enum ItemSubType : sbyte
 {
+#if YSDK
     Coin_Yan = -5,
     Coin_Ads = -4,
+#endif
     Coin_10 = -3,
     Coin_1 = -2,
     Cell = -1,
@@ -119,8 +121,10 @@ public enum Currency : byte
     None,
     Coins,
     Points,
+#if YSDK
     Ad,
     Yan
+#endif
 }
 
 public enum MixerGroup : byte 

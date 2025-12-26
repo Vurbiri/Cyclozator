@@ -106,8 +106,10 @@ public partial class Localization : Singleton<Localization>
             ItemSubType.Cell => _language["GoodsCell"],
             ItemSubType.Coin_1 => _language["GoodsCoin"],
             ItemSubType.Coin_10 => String.Format(_language["GoodsCoins"], 10),
+#if YSDK
             ItemSubType.Coin_Ads => _language["GoodsCoinsAd"],
             ItemSubType.Coin_Yan => String.Format(_language["GoodsCoinsYan"], YMoney.Inst.Coins, YMoney.Inst.PriceYan, YMoney.Inst.DayOffAd),
+#endif
 
             _ => _language["Error"]
         };

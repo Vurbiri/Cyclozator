@@ -1,4 +1,6 @@
+#if YSDK
 using Cysharp.Threading.Tasks;
+#endif
 using System;
 using System.Collections;
 using UnityEngine;
@@ -220,8 +222,17 @@ public class Game : Singleton<Game>
 
     public void OnGameOver()
     {
+
+#if !YSDK
+        Mode = GameMode.None;
+        _gameSFX.PlayGameOver();
+        BuffStorage.Inst.ResetBuffs(false);
+        GameStorage.Inst.ResetGame(Score);
+        EventGameOver?.Invoke();
+        _menuGameOver.SetActive(true);
+#else
         Time.timeScale = .0000000001f;
-        RewardAndGameOver().Forget();
+        RewardAndGameOver().Forget();        
 
         async UniTaskVoid RewardAndGameOver()
         {
@@ -237,5 +248,6 @@ public class Game : Singleton<Game>
             else
                 _menuGameOver.SetActive(true);
         }
+#endif
     }
 }

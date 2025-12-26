@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YSDK
 
 using Cysharp.Threading.Tasks;
 using System;
@@ -15,7 +15,7 @@ public partial class YMoney
 
         IsShowAd = true;
 
-        _audioMixer.SetFloat(_mixerGroup, _audioOffValue);
+        _audioMixer.Off();
 
         PauseCallback();
         bool result = await taskCompletion.Task;
@@ -23,7 +23,7 @@ public partial class YMoney
 
         if (isOn)
         {
-            _audioMixer.SetFloat(_mixerGroup, _audioOnValue);
+            _audioMixer.On();
             IsShowAd = false;
         }
 

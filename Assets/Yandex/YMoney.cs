@@ -1,49 +1,38 @@
+#if YSDK
+
 using Cysharp.Threading.Tasks;
 using System;
-using UnityEngine;
-using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
-public partial class YMoney : Singleton<YMoney>, ILoading
+public partial class YMoney : ILoading
 {
+    private static YMoney s_instance;
+    public static YMoney Inst => s_instance;
+
+
     private string _productID = "100coins";
     private readonly CInt _priceYan = 44;
     private readonly CInt _dayOffAd = 3;
     private readonly CInt _coins = 100;
-    [Space]
-    [Header("Показ рекламы за вознаграждение")]
-    [Range(0, 59)]
-    [SerializeField] private int _minCDAdReward = 14;
-    [Range(0, 59)]
-    [SerializeField] private int _secCDAdReward = 14;
-    [Space]
-    [Header("Показ полноэкранной рекламы")]
-    [Range(0, 59)]
-    [SerializeField] private int _minCDAdFull = 5;
-    [Range(0, 59)]
-    [SerializeField] private int _secCDAdFull = 25;
-    [Space]
-    [SerializeField] private int _rewardAdFull = 1;
-    [SerializeField] private float _chanceRewardAdFull = 25f;
-    [Space]
-    [Range(0, 59)]
-    [SerializeField] private int _minOffFirstAdFull = 15;
-    private Chance _chanceReward;
-    [Space]
-    [Header("Регулировка громкости")]
-    [SerializeField] private AudioMixer _audioMixer;
-    [SerializeField] private string _mixerGroup = "SuperMaster";
-    [SerializeField] private float _audioOffValue = -80f;
-    [SerializeField] private float _audioOnValue = 0f;
+
+    private readonly AudioMixerController _audioMixer;
+    private readonly Chance _chanceReward;
+    private readonly int _rewardAdFull;
+    private readonly int _minOffFirstAdFull;
+
     #region Full
-    private TimeSpan _timeCDAdFull = default;
+    private readonly TimeSpan _timeCDAdFull = default;
     private DateTime _endTimeAdFull = default;
     public bool IsTimeAdFull => CheckDate(_endTimeAdFull);
     #endregion
+
     #region Rewarded
     public TimeSpan CooldownAdReward { get; private set; }
     public DateTime EndTimeAdReward { get; set; }
     #endregion
+
     public bool IsShowAd { get; private set; } = false;
+    
     #region Purchase
     private const string _keyTime = "etb";
     private TimeSpan _deltaTimeBlock = default;
@@ -58,19 +47,29 @@ public partial class YMoney : Singleton<YMoney>, ILoading
     public int DayOffAd => _dayOffAd;
     public int Coins => _coins;
     #endregion
+
     public bool IsFirstStart { get; set; } = true;
     public event Action<bool> EventChangedPayments;
 
-    protected override void Awake()
+
+    public static void Create(Settings settings) => s_instance ??= new(settings);
+
+    private YMoney(Settings stt)
     {
-        base.Awake();
-        CooldownAdReward = new(0, _minCDAdReward, _secCDAdReward);
-        _timeCDAdFull = new(0, _minCDAdFull, _secCDAdFull);
+        _audioMixer = stt.audioMixer;
+
+        CooldownAdReward = new(0, stt.minCDAdReward, stt.secCDAdReward);
+        _timeCDAdFull = new(0, stt.minCDAdFull, stt.secCDAdFull);
         _deltaTimeBlock = new(_dayOffAd, 0, 1, 0);
-        _chanceReward = new(_chanceRewardAdFull);
+        _chanceReward = new(stt.chanceRewardAdFull);
+
+        _rewardAdFull = stt.rewardAdFull;
+        _minOffFirstAdFull = stt.minOffFirstAdFull;
+
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
-    protected override void OnUnloaded() => EventChangedPayments = null;
+    private void OnSceneUnloaded(Scene scene) => EventChangedPayments = null;
 
     public bool Load()
     {
@@ -163,7 +162,7 @@ public partial class YMoney : Singleton<YMoney>, ILoading
         bool result = await taskCloseRewardedVideo.Task;
         taskCloseRewardedVideo = null;
 
-        _audioMixer.SetFloat(_mixerGroup, _audioOnValue);
+        _audioMixer.On();
         IsShowAd = false;
 
         return result;
@@ -175,14 +174,14 @@ public partial class YMoney : Singleton<YMoney>, ILoading
     private async UniTask<bool> ShowAd(UniTaskCompletionSource<bool> taskCompletion, Action action, bool isOn = true)
     {
         IsShowAd = true;
-        _audioMixer.SetFloat(_mixerGroup, _audioOffValue);
+        _audioMixer.Off();
 
         action();
         bool result = await taskCompletion.Task;
 
         if (isOn)
         {
-            _audioMixer.SetFloat(_mixerGroup, _audioOnValue);
+            _audioMixer.On();
             IsShowAd = false;
         }
         return result;
@@ -356,3 +355,4 @@ public partial class YMoney : Singleton<YMoney>, ILoading
         Message.Banner(msg, time: time);
     }
 }
+#endif

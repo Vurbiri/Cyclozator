@@ -15,7 +15,7 @@ public static class Storage
 
     public static bool Create<T>() where T : ISaveLoad, new()
     {
-        if (typeof(T) == TypeStorage)
+        if (typeof(T) == service?.GetType())
             return true; 
 
         service = new T();
@@ -71,13 +71,21 @@ public static class Storage
 
     public static bool StoragesCreate()
     {
+#if YSDK
         if (Create<JsonToYandex>())
             return true;
+#endif
 
         if (Create<JsonToLocalStorage>())
             return true;
 
         if (Create<JsonToCookies>())
+            return true;
+
+        if (Create<JsonToFile>())
+            return true;
+
+        if (Create<JsonToPlayerPrefs>())
             return true;
 
         Create<EmptyStorage>();
@@ -108,7 +116,9 @@ public static class Storage
         BuffStorage.Inst.Create();
         SettingsStorage.Inst.Create();
         GameStorage.Inst.Create();
+#if YSDK
         YMoney.Inst.Create();
+#endif
 
         return false;
 
@@ -117,11 +127,15 @@ public static class Storage
         {
             bool result = false;
 
-            result = Loading(Inventory.Inst) || result;
-            result = Loading(SettingsStorage.Inst) || result;
-            result = Loading(BuffStorage.Inst) || result;
-            result = Loading(GameStorage.Inst) || result;
-            return Loading(YMoney.Inst) || result;
+            result |= Loading(Inventory.Inst);
+            result |= Loading(SettingsStorage.Inst);
+            result |= Loading(BuffStorage.Inst);
+            result |= Loading(GameStorage.Inst);
+#if YSDK
+            result |= Loading(YMoney.Inst);
+#endif
+
+            return result;
         }
 
         static bool Loading(ILoading instantiate)

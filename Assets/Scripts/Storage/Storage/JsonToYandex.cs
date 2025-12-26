@@ -1,3 +1,5 @@
+#if YSDK
+
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
@@ -6,8 +8,12 @@ using System.Collections.Generic;
 public class JsonToYandex : JsonTo
 {
     private string _key;
-    
+
+#if UNITY_EDITOR
+    public override bool IsValid => false;
+#else
     public override bool IsValid => YandexSDK.Inst.IsLogOn;
+#endif
 
     public async override UniTask<bool> Initialize(string key)
     {
@@ -71,3 +77,4 @@ public class JsonToYandex : JsonTo
         }
     }
 }
+#endif

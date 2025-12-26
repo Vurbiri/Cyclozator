@@ -1,13 +1,18 @@
+#if YSDK
 using Cysharp.Threading.Tasks;
+#endif
 using UnityEngine;
 
 public class ShowAdInGame : MonoBehaviour
 {
+#if !YSDK
+    private void Start() => Destroy(this);
+#else
     [Range(2, 11)]
-    [SerializeField] private int _showPerLevel = 5;
+    [SerializeField] private int _showPerLevel = 4;
     [Space]
-    [SerializeField] private int _timeBeforeShow = 3000;
-    [SerializeField] private int _step = 5;
+    [SerializeField] private int _timeBeforeShow = 3600;
+    [SerializeField] private int _step = 3;
 
     private int _nextLevel = 0;
 
@@ -69,4 +74,5 @@ public class ShowAdInGame : MonoBehaviour
             _nextLevel += Random.Range(_showPerLevel - 1, _showPerLevel + 2) + lvl;
         }
     }
+#endif
 }

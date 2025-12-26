@@ -1,14 +1,16 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 
 public class Inventory : Singleton<Inventory>, ILoading
 {
-   
-    [SerializeField] private string _pathGoods = "Items/Goods";
-    [SerializeField] private string _pathBuffs = "Items/Buffs";
+#if YSDK
+    private const string GOODS = "ItemsYSDK/Goods";
+#else
+    private const string GOODS = "Items/Goods";
+#endif
+    private const string BUFFS = "Items/Buffs";
 
     private Dictionary<ItemSubType, Item> _dGoods;
     private Dictionary<ItemSubType, Item> _dBuffs;
@@ -61,8 +63,8 @@ public class Inventory : Singleton<Inventory>, ILoading
 
     public bool LoadFromResources()
     {
-        var (resultG, valueG) = Storage.LoadFromResources<Dictionary<ItemSubType, Item>>(_pathGoods);
-        var (resultB, valueB) = Storage.LoadFromResources<Dictionary<ItemSubType, Item>>(_pathBuffs);
+        var (resultG, valueG) = Storage.LoadFromResources<Dictionary<ItemSubType, Item>>(GOODS);
+        var (resultB, valueB) = Storage.LoadFromResources<Dictionary<ItemSubType, Item>>(BUFFS);
 
         if (resultG && resultB)
         {
@@ -95,7 +97,7 @@ public class Inventory : Singleton<Inventory>, ILoading
     {
         _score = new();
 
-        var (resultB, valueB) = Storage.LoadFromResources<Dictionary<ItemSubType, Item>>(_pathBuffs);
+        var (resultB, valueB) = Storage.LoadFromResources<Dictionary<ItemSubType, Item>>(BUFFS);
         if (resultB)
             foreach (var b in _dBuffs)
                 b.Value.Count = valueB[b.Value.SubType].Count;
@@ -104,11 +106,15 @@ public class Inventory : Singleton<Inventory>, ILoading
         EventLoad?.Invoke();
     }
 
+
     private void InitScore()
     {
+#if YSDK
         if (_dGoods.TryGetValue(ItemSubType.Coin_1, out Item item))
             _score.SetConversionRate((int)item.Price);
+#endif
     }
+
 }
 
 

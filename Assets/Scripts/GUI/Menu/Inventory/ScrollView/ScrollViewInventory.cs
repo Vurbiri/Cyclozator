@@ -69,13 +69,14 @@ public class ScrollViewInventory : ScrollViewPanel<ItemGoodsGUI>
     protected override ItemGoodsGUI CreateItem(Item item)
     {
         ItemGoodsGUI itemGUI = base.CreateItem(item);
+#if YSDK
         if (item.Currency == Currency.Ad)
         {
             bool init = YandexSDK.Inst.IsInitialize;
             itemGUI.OnAdvertisement(init ? "1" : "0", init);
             _dealer.EventAdvertisement += itemGUI.OnAdvertisement;
         }
-
+#endif
         return itemGUI;
     }
 
@@ -117,12 +118,16 @@ public class ScrollViewInventory : ScrollViewPanel<ItemGoodsGUI>
         if (item != null)
         {
             _hint.text = item.Description;
+#if YSDK
             _textButtonBuy.text = item.Currency switch
             {
                 Currency.Ad => _textAd,
                 Currency.Yan => TextButtonYan(),
                 _ => _textBuy,
             };
+#else
+            _textButtonBuy.text = _textBuy;
+#endif
         }
         else
         {
@@ -130,6 +135,7 @@ public class ScrollViewInventory : ScrollViewPanel<ItemGoodsGUI>
             _textButtonBuy.text = _textBuy;
         }
 
+#if YSDK
         string TextButtonYan()
         {
             if (!YandexSDK.Inst.IsLogOn)
@@ -137,5 +143,6 @@ public class ScrollViewInventory : ScrollViewPanel<ItemGoodsGUI>
 
             return YMoney.Inst.Status == StatusPurchase.Ready ? _textBuy : _textYanErr;
         }
+#endif
     }
 }

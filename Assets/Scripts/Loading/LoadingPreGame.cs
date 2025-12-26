@@ -2,9 +2,11 @@ using Cysharp.Threading.Tasks;
 
 public class LoadingPreGame : LoadingScreen
 {
-    private YandexSDK YSDK => YandexSDK.Inst;
+#if YSDK
+    [UnityEngine.SerializeField] private YMoney.Settings _settingsYMoney;
+#endif
+
     private Localization Loc => Localization.Inst;
-    private YMoney YM => YMoney.Inst;
 
     private void Start() => Loading().Forget();
 
@@ -20,44 +22,46 @@ public class LoadingPreGame : LoadingScreen
             return;
         }
 
-        if (await YSDK.InitYsdk())
+#if YSDK
+        if (await YandexSDK.Inst.InitYsdk())
             await Initialize();
         else
             Message.Log("YandexSDK - initialization error!");
-
-#if !UNITY_EDITOR
-        if(!Storage.StoragesCreate())
-            Message.Banner(Loc.GetText("ErrorStorage"), MessageType.Error, 7000);
-#else
-        if (YSDK.IsLogOn)
-            Storage.Create<JsonToFile>();
-        else
-            Storage.Create<JsonToPlayerPrefs>();
 #endif
-        YM.IsFirstStart = !await Storage.Initialize();
 
-        //if (YM.IsPayments)
-        //    await YM.CheckPurchases();
+        if (!Storage.StoragesCreate())
+            Message.Banner(Loc.GetText("ErrorStorage"), MessageType.Error, 7000);
+
+        Message.Log(Storage.TypeStorage?.Name);
+
+#if YSDK
+        YMoney.Inst.IsFirstStart = SettingsStorage.Inst.IsFirstStart =!await Storage.Initialize();
+#else
+        SettingsStorage.Inst.IsFirstStart = !await Storage.Initialize();
+#endif
 
         Message.Log("End LoadingPreGame");
         EndLoadScene();
 
         //============== local func ===============================
         bool LoadFromResources() => Loc.LoadFromResources() && Inventory.Inst.LoadFromResources();
-        
+
+#if YSDK
         async UniTask Initialize()
         {
-            if (!await YSDK.InitPlayer())
+            if (!await YandexSDK.Inst.InitPlayer())
                 Message.Log("Player - initialization error!");
 
-            if (!await YSDK.InitLeaderboards())
+            if (!await YandexSDK.Inst.InitLeaderboards())
                 Message.Log("Leaderboards - initialization error!");
 
-            //if (!await YM.Initialize())
-            //    Message.Log("Payments - initialization error!");
+            YMoney.Create(_settingsYMoney);
         }
+#endif
     }
 
-    private void OnDisable() => YSDK.LoadingAPI_Ready();
+#if YSDK
+    private void OnDisable() => YandexSDK.Inst.LoadingAPI_Ready();
+#endif
 
 }

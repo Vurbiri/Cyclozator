@@ -3,7 +3,7 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 Library/
-/[Tt]emp/
+Temp/
 obj/
 Logs/
 UserSettings/
@@ -26,6 +26,7 @@ UserSettings/
 *.mdb
 *.opendb
 *.VC.db
+*.pdf
 
 # Unity3D generated meta files
 *.pidb.meta

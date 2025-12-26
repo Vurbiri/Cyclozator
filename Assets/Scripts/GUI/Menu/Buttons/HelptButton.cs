@@ -6,9 +6,10 @@ public class HelpButton : MonoBehaviour
 {
     private void Start()
     {
-        Button helpButton = GetComponent<Button>();
+        var helpButton = GetComponent<Button>();
+        var settings = SettingsStorage.Inst;
 
-        if (YMoney.Inst.IsFirstStart && !SettingsStorage.Inst.IsDesktop) 
+        if (settings.IsFirstStart && !settings.IsDesktop) 
             helpButton.onClick?.Invoke();
     }
 }

@@ -1,6 +1,7 @@
+#if YSDK
+
 using Newtonsoft.Json;
 using System;
-
 
 public partial class YMoney
 {
@@ -60,3 +61,4 @@ public partial class YMoney
         }
     }
 }
+#endif

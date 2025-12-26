@@ -1,3 +1,5 @@
+#if YSDK
+
 using System.Runtime.InteropServices;
 
 public partial class YMoney
@@ -20,3 +22,4 @@ public partial class YMoney
     private static extern void ConsumePurchaseJS(string token);
 
 }
+#endif
