@@ -109,12 +109,9 @@ public class Inventory : Singleton<Inventory>, ILoading
 
     private void InitScore()
     {
-#if YSDK
         if (_dGoods.TryGetValue(ItemSubType.Coin_1, out Item item))
             _score.SetConversionRate((int)item.Price);
-#endif
     }
-
 }
 
 

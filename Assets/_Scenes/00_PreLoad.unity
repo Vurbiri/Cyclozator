@@ -199,8 +199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isNotDestroying: 1
-  _pathGoods: Items/Goods
-  _pathBuffs: Items/Buffs
 --- !u!4 &137139538
 Transform:
   m_ObjectHideFlags: 0
@@ -336,19 +334,6 @@ MonoBehaviour:
   - {fileID: 4800344491789890625, guid: 5f4bfa2d60e3d3640bb3105c644cf8b9, type: 3}
   - {fileID: 9767148419339626, guid: ec7ce1867d75e5d4f8f2584af6c37375, type: 3}
   - {fileID: 6982333321663171451, guid: 8e12c14f2cd17b0459908b342dbe9d40, type: 3}
-  _settingsYMoney:
-    minCDAdReward: 10
-    secCDAdReward: 1
-    minCDAdFull: 5
-    secCDAdFull: 55
-    rewardAdFull: 1
-    chanceRewardAdFull: 25
-    minOffFirstAdFull: 15
-    audioMixer:
-      _audioMixer: {fileID: 0}
-      _mixerGroup: SuperMaster
-      _audioOffValue: -80
-      _audioOnValue: 0
 --- !u!1 &916333696
 GameObject:
   m_ObjectHideFlags: 0
