@@ -1,4 +1,5 @@
-![Cover](img/Cover_eng.png)
+<div align="center"> ![Cover](img/Cover_eng.png) </div>
+
 ______
 > In the game “Cyclozator" you have to do an important job - to disarm the Distortion figures. By earning points and improving the Cyclozator for the next attempt, the player can complete endless levels to become the world's best Cyclozator rotator.
 
