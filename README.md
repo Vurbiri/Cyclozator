@@ -1,8 +1,11 @@
 <div align="center"> 
+<a href="https://play.unity.com/en/games/a70d8e9e-01c5-4193-945e-c0b653878f36/cyclozator">
 <img src="img/Cover_eng.png" alt="Cover" title="Cyclozator" width="500" > 
+</a>
 </div>
 
-______
+<hr>
+
 > In the game “Cyclozator" you have to do an important job - to disarm the Distortion figures. By earning points and improving the Cyclozator for the next attempt, the player can complete endless levels to become the world's best Cyclozator rotator.
 
 >> Somewhere very far away, perhaps even beyond our universe, there is a profession as a Cyclozator rotator.
@@ -11,10 +14,18 @@ The rotator's job is to disarm the Distortion figures with a suitable neutralize
 Every evening the rotator returns home tired, but he knows that his efforts to help maintain order in all universes and keep them safe and sound.
 Ready to get to work?
 
-______
+<hr>
 
 <div align="center"> 
 <a href="https://youtu.be/cONEj9CJUJI">
 <img src="img/Cyclozator_eng_gif.gif" alt="YouTube" title="YouTube"> 
+</a>
+</div>
+
+<br>
+
+<div align="center"> 
+<a href="https://play.unity.com/en/games/a70d8e9e-01c5-4193-945e-c0b653878f36/cyclozator">
+<img src="img/PlayButton.png" alt="Play" title="Play"> 
 </a>
 </div>

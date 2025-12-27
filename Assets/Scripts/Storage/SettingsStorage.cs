@@ -100,9 +100,11 @@ public class SettingsStorage : Singleton<SettingsStorage>, ILoading
 	{
 
 #if !UNITY_EDITOR
+#if YSDK
 		if (YandexSDK.Inst.IsPlayer)
 			IsDesktop = YandexSDK.Inst.IsDesktop;
 		else
+#endif
 			IsDesktop = !UnityJS.IsMobile;
 #endif
 

@@ -1,6 +1,5 @@
-var UnityPlugin =
+var UtilityPlugin =
 {
-
     IsMobileUnityJS: function () {
         return Module.SystemInfo.mobile;
     },
@@ -50,14 +49,14 @@ var UnityPlugin =
         }
     },
     IsStorageJS: function () {
-        var test = 'test';
+        var test = 'teststorage';
         try {
             localStorage.setItem(test, test);
             localStorage.removeItem(test);
             console.log("++ IsStorage: true ++");
             return true;
         } catch (e) {
-            console.log("-- IsStorage: false --");
+            console.log("-- IsStorage: " + e + " --");
             return false;
         }
     },
@@ -71,7 +70,7 @@ var UnityPlugin =
         try {
             expires.setFullYear(expires.getFullYear() + 1);
             document.cookie = sKey + "=" + (dt ? btoa(dt) : "") + ";expires=" + expires.toGMTString();
-            console.log("++ SetCookies  ++");
+            console.log("++ SetCookies ++");
             return true;
         }
         catch (e) {
@@ -101,7 +100,7 @@ var UnityPlugin =
         }
         else {
             
-            console.log("++ GetCookies  ++");
+            console.log("++ GetCookies ++");
             return func.toUnityString(atob(value));
         }
     },
@@ -114,15 +113,27 @@ var UnityPlugin =
         console.log("== GetCookies: " + isCookieEnabled + " ++");
         return isCookieEnabled;
     },
+	
+	$func: {
+        isEmpty: function (obj) {
+            if (!obj) return true;
 
-    QuitJS: function (url) {
-        window.unityInstance
-            .Quit()
-            .then(() => {
-                window.location.replace(UTF8ToString(url));
-        });
+            return Object.keys(obj).length === 0;
+        },
+		
+		toUnityString: function (returnStr) {
+            if (func.isEmpty(returnStr))
+                return null;
+
+            var bufferSize = lengthBytesUTF8(returnStr) + 1;
+            var buffer = _malloc(bufferSize);
+            stringToUTF8(returnStr, buffer, bufferSize);
+            return buffer;
+        },
     },
+
 }
 
-mergeInto(LibraryManager.library, UnityPlugin);
+autoAddDeps(UtilityPlugin, '$func');
+mergeInto(LibraryManager.library, UtilityPlugin);
 

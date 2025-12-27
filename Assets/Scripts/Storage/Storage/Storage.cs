@@ -82,11 +82,13 @@ public static class Storage
         if (Create<JsonToCookies>())
             return true;
 
+#if UNITY_EDITOR
         if (Create<JsonToFile>())
             return true;
 
         if (Create<JsonToPlayerPrefs>())
             return true;
+#endif
 
         Create<EmptyStorage>();
         return false;
